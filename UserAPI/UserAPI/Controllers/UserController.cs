@@ -47,7 +47,29 @@ namespace UserAPI.Controllers
                 return Ok(viewUser);
             }
 
-            else return BadRequest("Invalid ID");
+            else return BadRequest("Invalid ID Number");
+        }
+
+        [HttpGet]
+        public IActionResult GetAllUser()
+        {
+            var users = db.Users.ToList();
+            var getAllUser = new List<ViewUserModel>();
+
+            foreach(var user in users)
+            {
+                if (user != null)
+                {
+                    var userModel = new ViewUserModel();
+                    userModel.Id = user.Id;
+                    userModel.Name = user.FirstName + " " + user.LastName;
+                    userModel.Phone = user.Phone;
+
+                    getAllUser.Add(userModel);
+                }
+            }
+
+            return Ok(getAllUser);
         }
     }
 }
