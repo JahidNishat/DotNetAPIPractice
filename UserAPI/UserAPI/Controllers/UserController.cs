@@ -31,7 +31,23 @@ namespace UserAPI.Controllers
         [Route("id")]
         public IActionResult GetUserById(long id)
         {
-            return Ok(db.Users.Find(id));
+            var viewUser = new List<ViewUserModel>();
+            var user = db.Users.Find(id);
+
+            if (user != null)
+            {
+                var tempUser = new ViewUserModel();
+
+                tempUser.Id = user.Id;
+                tempUser.Name = user.FirstName + " " + user.LastName;
+                tempUser.Phone = user.Phone;
+
+                viewUser.Add(tempUser);
+
+                return Ok(viewUser);
+            }
+
+            else return BadRequest("Invalid ID");
         }
     }
 }
