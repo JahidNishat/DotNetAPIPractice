@@ -26,5 +26,12 @@ namespace UserAPI.Controllers
 
             return Ok(userInfo);
         }
+
+        [HttpGet]
+        [Route("id")]
+        public IActionResult GetUserById(long id)
+        {
+            return Ok(db.Users.Find(id));
+        }
     }
 }
